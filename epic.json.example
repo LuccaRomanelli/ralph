@@ -1,0 +1,19 @@
+{
+  "epicName": "user-management",
+  "description": "Complete user management system with authentication, profiles, and admin dashboard",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "prds": [
+    {
+      "name": "user-auth",
+      "dependsOn": []
+    },
+    {
+      "name": "user-profiles",
+      "dependsOn": []
+    },
+    {
+      "name": "admin-dashboard",
+      "dependsOn": ["user-auth", "user-profiles"]
+    }
+  ]
+}

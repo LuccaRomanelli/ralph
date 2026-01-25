@@ -1,0 +1,22 @@
+{
+  "project": "MyApp",
+  "branchName": "ralph/feature-name",
+  "config": {
+    "runStrategy": "all",
+    "maxTests": 0,
+    "failureAction": "fix",
+    "maxFixAttempts": 3
+  },
+  "tests": [
+    {
+      "id": "RT-001",
+      "storyId": "US-001",
+      "storyTitle": "Example story",
+      "description": "Verify feature X works",
+      "command": "npm test -- --grep 'feature X'",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "lastRun": null,
+      "lastResult": "never"
+    }
+  ]
+}

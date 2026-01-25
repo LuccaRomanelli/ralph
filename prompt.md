@@ -4,16 +4,26 @@ You are an autonomous coding agent working on a software project.
 
 ## Your Task
 
-1. Read the PRD at `prd.json` (in the same directory as this file)
+1. Read the PRD at `prd.json` (in the current directory)
 2. Read the progress log at `progress.txt` (check Codebase Patterns section first)
-3. Check you're on the correct branch from PRD `branchName`. If not, check it out or create from main.
+3. You are already on the correct feature branch (managed by worktree - do NOT checkout or create branches)
 4. Pick the **highest priority** user story where `passes: false`
 5. Implement that single user story
 6. Run quality checks (e.g., typecheck, lint, test - use whatever your project requires)
 7. Update CLAUDE.md files if you discover reusable patterns (see below)
 8. If checks pass, commit ALL changes with message: `feat: [Story ID] - [Story Title]`
-9. Update the PRD to set `passes: true` for the completed story
-10. Append your progress to `progress.txt`
+9. Create a regression test for this story (see Regression Testing section below)
+10. Update the PRD to set `passes: true` for the completed story
+11. Append your progress to `progress.txt`
+
+## Important: Worktree Environment
+
+You are running inside a git worktree. This means:
+- You are ALREADY on the correct feature branch
+- Do NOT run `git checkout` or `git switch` commands
+- Do NOT create new branches
+- All changes should be committed to the current branch
+- The main branch is protected and unchanged in the main repository
 
 ## Progress Report Format
 
@@ -22,6 +32,7 @@ APPEND to progress.txt (never replace, always append):
 ## [Date/Time] - [Story ID]
 - What was implemented
 - Files changed
+- Regression test added: RT-XXX
 - **Learnings for future iterations:**
   - Patterns discovered (e.g., "this codebase uses X for Y")
   - Gotchas encountered (e.g., "don't forget to update Z when changing W")
@@ -30,6 +41,107 @@ APPEND to progress.txt (never replace, always append):
 ```
 
 The learnings section is critical - it helps future iterations avoid repeating mistakes and understand the codebase better.
+
+## Regression Testing
+
+After completing a story, add a regression test to `regression-tests.json` to ensure the feature keeps working.
+
+### Schema
+
+```json
+{
+  "id": "RT-XXX",
+  "storyId": "US-XXX",
+  "storyTitle": "The story title",
+  "description": "What this test verifies",
+  "command": "command that returns exit code 0 on success",
+  "createdAt": "ISO-8601 timestamp",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
+
+### Guidelines
+
+1. **Test ID**: Use format `RT-XXX` where XXX is the next sequential number
+2. **Command**: Must return exit code 0 on success, non-zero on failure
+3. **Description**: Clearly state what behavior is being verified
+4. **Keep tests fast**: Each test should complete in under 30 seconds
+
+### Examples by Story Type
+
+**Database/API story:**
+```json
+{
+  "id": "RT-001",
+  "storyId": "US-001",
+  "storyTitle": "Add user endpoint",
+  "description": "Verify POST /api/users creates a user",
+  "command": "npm test -- --grep 'POST /api/users'",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
+
+**UI component story:**
+```json
+{
+  "id": "RT-002",
+  "storyId": "US-002",
+  "storyTitle": "Add login button",
+  "description": "Verify login button renders and is clickable",
+  "command": "npm test -- --grep 'LoginButton'",
+  "createdAt": "2024-01-15T11:00:00Z",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
+
+**Build/config story:**
+```json
+{
+  "id": "RT-003",
+  "storyId": "US-003",
+  "storyTitle": "Add TypeScript support",
+  "description": "Verify TypeScript compiles without errors",
+  "command": "npx tsc --noEmit",
+  "createdAt": "2024-01-15T12:00:00Z",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
+
+**CLI tool story:**
+```json
+{
+  "id": "RT-004",
+  "storyId": "US-004",
+  "storyTitle": "Add --version flag",
+  "description": "Verify --version outputs version number",
+  "command": "./cli.sh --version | grep -E '^[0-9]+\\.[0-9]+\\.[0-9]+$'",
+  "createdAt": "2024-01-15T13:00:00Z",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
+
+### Manual-only Tests
+
+If the story cannot be tested via command line (e.g., purely visual changes), add a test with a descriptive command that documents the manual verification:
+
+```json
+{
+  "id": "RT-005",
+  "storyId": "US-005",
+  "storyTitle": "Improve button hover animation",
+  "description": "MANUAL: Verify button hover animation is smooth",
+  "command": "echo 'MANUAL TEST - verify hover animation visually' && exit 0",
+  "createdAt": "2024-01-15T14:00:00Z",
+  "lastRun": null,
+  "lastResult": "never"
+}
+```
 
 ## Consolidate Patterns
 
@@ -99,3 +211,5 @@ If there are still stories with `passes: false`, end your response normally (ano
 - Commit frequently
 - Keep CI green
 - Read the Codebase Patterns section in progress.txt before starting
+- Always add a regression test for completed stories
+- Do NOT checkout or create branches (worktree manages this)

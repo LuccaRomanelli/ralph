@@ -11,12 +11,30 @@ Create detailed Product Requirements Documents that are clear, actionable, and s
 
 ## The Job
 
-1. Receive a feature description from the user
-2. Ask 5-10 essential clarifying questions (with lettered options)
-3. Generate a structured PRD based on answers
-4. Save to `tasks/prd-[feature-name].md`
+1. Ask for the **PRD folder name** (kebab-case, e.g., `task-priority`, `user-auth`)
+2. Receive a feature description from the user
+3. Ask 5-10 essential clarifying questions (with lettered options)
+4. Generate a structured PRD based on answers
+5. Save to `prds/<folder-name>/prd.md`
+6. Create status file with value `unstarted`
 
 **Important:** Do NOT start implementing. Just create the PRD.
+
+---
+
+## Step 0: Get PRD Folder Name
+
+Before anything else, ask for the PRD folder name:
+
+```
+What should I name this PRD folder? (use kebab-case, e.g., "task-priority", "user-auth")
+```
+
+The folder name should be:
+- Lowercase
+- Kebab-case (words separated by hyphens)
+- Short but descriptive (2-4 words max)
+- Related to the feature being built
 
 ---
 
@@ -85,7 +103,7 @@ Each story should be small enough to implement in one focused session.
 - [ ] **[UI stories only]** Verify changes work in browser
 ```
 
-**Important:** 
+**Important:**
 - Acceptance criteria must be verifiable, not vague. "Works correctly" is bad. "Button shows confirmation dialog before deleting" is good.
 - **For any story with UI changes:** Always include "Verify changes work in browser" as acceptance criteria. This ensures visual verification of frontend work.
 
@@ -133,9 +151,31 @@ The PRD reader may be a junior developer or AI agent. Therefore:
 
 ## Output
 
-- **Format:** Markdown (`.md`)
-- **Location:** `tasks/`
-- **Filename:** `prd-[feature-name].md` (kebab-case)
+### File Structure
+
+Create the following structure:
+```
+prds/
+└── <folder-name>/
+    ├── prd.md          # The PRD document
+    └── status          # Contains "unstarted"
+```
+
+### Commands to Run
+
+After writing the PRD:
+
+```bash
+mkdir -p prds/<folder-name>
+# Write prd.md to prds/<folder-name>/prd.md
+echo "unstarted" > prds/<folder-name>/status
+```
+
+### File Details
+
+- **Location:** `prds/<folder-name>/`
+- **PRD filename:** `prd.md`
+- **Status file:** `status` containing the text `unstarted`
 
 ---
 
@@ -232,9 +272,28 @@ Add priority levels to tasks so users can focus on what matters most. Tasks can 
 
 Before saving the PRD:
 
+- [ ] Asked for PRD folder name (kebab-case)
 - [ ] Asked clarifying questions with lettered options
 - [ ] Incorporated user's answers
 - [ ] User stories are small and specific
 - [ ] Functional requirements are numbered and unambiguous
 - [ ] Non-goals section defines clear boundaries
-- [ ] Saved to `tasks/prd-[feature-name].md`
+- [ ] Asks questions until no open questions
+- [ ] Saved to `prds/<folder-name>/prd.md`
+- [ ] Created `prds/<folder-name>/status` with value `unstarted`
+
+---
+
+## Next Steps
+
+After creating the PRD, tell the user:
+
+```
+PRD created at: prds/<folder-name>/prd.md
+Status: unstarted
+
+Next steps:
+1. Review the PRD and make any adjustments
+2. Run /ralph to convert prd.md to prd.json
+3. Run ./ralph.sh to start the autonomous agent loop
+```

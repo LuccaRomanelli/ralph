@@ -11,7 +11,52 @@ Converts existing PRDs to the prd.json format that Ralph uses for autonomous exe
 
 ## The Job
 
-Take a PRD (markdown file or text) and convert it to `prd.json` in your ralph directory.
+1. List available PRDs in `prds/` directory
+2. Ask user which PRD to convert (if multiple exist)
+3. Read the `prd.md` file from the selected PRD folder
+4. Convert it to `prd.json` in the same folder
+5. Update status to `unstarted` if not already set
+
+---
+
+## Step 1: Find PRD to Convert
+
+Check for PRDs in the `prds/` directory:
+
+```bash
+ls -la prds/
+```
+
+If multiple PRD folders exist, show them and ask which to convert:
+
+```
+Available PRDs:
+  1. task-priority/  [unstarted]
+  2. user-auth/      [in_progress]
+  3. dashboard/      [unstarted]
+
+Which PRD should I convert? (enter number or folder name)
+```
+
+If only one PRD exists without a prd.json, use it automatically.
+
+---
+
+## Step 2: Read and Validate prd.md
+
+Read the PRD markdown file:
+- Location: `prds/<folder-name>/prd.md`
+
+Verify it contains:
+- User stories with IDs (US-XXX format)
+- Acceptance criteria for each story
+- Clear feature description
+
+If prd.md is missing, inform the user:
+```
+No prd.md found in prds/<folder-name>/
+Use /prd to create a PRD first.
+```
 
 ---
 
@@ -20,8 +65,10 @@ Take a PRD (markdown file or text) and convert it to `prd.json` in your ralph di
 ```json
 {
   "project": "[Project Name]",
-  "branchName": "ralph/[feature-name-kebab-case]",
+  "branchName": "ralph/[folder-name]",
   "description": "[Feature description from PRD title/intro]",
+  "epicName": "[epic-name or null if not part of epic]",
+  "dependsOn": ["[prd-names this depends on]"],
   "userStories": [
     {
       "id": "US-001",
@@ -118,11 +165,49 @@ Frontend stories are NOT complete until visually verified.
 ## Conversion Rules
 
 1. **Each user story becomes one JSON entry**
-2. **IDs**: Sequential (US-001, US-002, etc.)
+2. **IDs**: Sequential (US-001, US-002, etc.) - preserve from prd.md
 3. **Priority**: Based on dependency order, then document order
 4. **All stories**: `passes: false` and empty `notes`
-5. **branchName**: Derive from feature name, kebab-case, prefixed with `ralph/`
-6. **Always add**: "Typecheck passes" to every story's acceptance criteria
+5. **branchName**: Use `ralph/<folder-name>` where folder-name is the PRD folder
+6. **Always add**: "Typecheck passes" to every story's acceptance criteria (if not present)
+7. **epicName**: If PRD is part of an epic (check for epic.json in parent or sibling folders), set to epic name. Otherwise `null`.
+8. **dependsOn**: Array of PRD folder names that must complete before this one can start. Check the prd.md for "Dependencies" section or epic.json for dependency graph. Empty array `[]` if no dependencies.
+
+---
+
+## Epic Detection
+
+When converting a PRD, check if it belongs to an epic:
+
+1. **Check prd.md**: Look for "Epic:" line near the top or "Dependencies" section
+2. **Check for epic.json**: Search `prds/*/epic.json` for references to this PRD folder name
+3. **Extract dependencies**: From epic.json's `prds[].dependsOn` array
+
+### Example epic.json lookup:
+
+```bash
+# Find epic.json files
+ls prds/*/epic.json
+
+# Check if this PRD is in an epic
+cat prds/*/epic.json | jq -r '.prds[] | select(.name == "user-auth")'
+```
+
+If PRD is part of an epic:
+```json
+{
+  "epicName": "user-management",
+  "dependsOn": []
+}
+```
+
+If PRD is standalone:
+```json
+{
+  "epicName": null,
+  "dependsOn": []
+}
+```
 
 ---
 
@@ -147,7 +232,7 @@ Each is one focused change that can be completed and verified independently.
 
 ## Example
 
-**Input PRD:**
+**Input PRD (prds/task-status/prd.md):**
 ```markdown
 # Task Status Feature
 
@@ -160,12 +245,14 @@ Add ability to mark tasks with different statuses.
 - Persist status in database
 ```
 
-**Output prd.json:**
+**Output (prds/task-status/prd.json):**
 ```json
 {
   "project": "TaskApp",
   "branchName": "ralph/task-status",
   "description": "Task Status Feature - Track task progress with status indicators",
+  "epicName": null,
+  "dependsOn": [],
   "userStories": [
     {
       "id": "US-001",
@@ -229,18 +316,16 @@ Add ability to mark tasks with different statuses.
 
 ---
 
-## Archiving Previous Runs
+## Output Location
 
-**Before writing a new prd.json, check if there is an existing one from a different feature:**
+Write the prd.json to the same folder as the prd.md:
 
-1. Read the current `prd.json` if it exists
-2. Check if `branchName` differs from the new feature's branch name
-3. If different AND `progress.txt` has content beyond the header:
-   - Create archive folder: `archive/YYYY-MM-DD-feature-name/`
-   - Copy current `prd.json` and `progress.txt` to archive
-   - Reset `progress.txt` with fresh header
-
-**The ralph.sh script handles this automatically** when you run it, but if you are manually updating prd.json between runs, archive first.
+```
+prds/<folder-name>/
+├── prd.md              # Source (human-readable)
+├── prd.json            # Generated (machine-readable)
+└── status              # Update if needed
+```
 
 ---
 
@@ -248,10 +333,29 @@ Add ability to mark tasks with different statuses.
 
 Before writing prd.json, verify:
 
-- [ ] **Previous run archived** (if prd.json exists with different branchName, archive it first)
+- [ ] Read prd.md from `prds/<folder-name>/`
 - [ ] Each story is completable in one iteration (small enough)
 - [ ] Stories are ordered by dependency (schema to backend to UI)
 - [ ] Every story has "Typecheck passes" as criterion
 - [ ] UI stories have "Verify changes work in browser" as criterion
 - [ ] Acceptance criteria are verifiable (not vague)
 - [ ] No story depends on a later story
+- [ ] branchName uses format `ralph/<folder-name>`
+- [ ] Saved to `prds/<folder-name>/prd.json`
+
+---
+
+## Next Steps
+
+After creating the prd.json, tell the user:
+
+```
+prd.json created at: prds/<folder-name>/prd.json
+Branch: ralph/<folder-name>
+Stories: X total
+
+Next steps:
+1. Review the stories and acceptance criteria
+2. Run ./ralph.sh to start the autonomous agent loop
+   Or: ./ralph.sh 10 <folder-name>
+```
