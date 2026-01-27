@@ -7,6 +7,8 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
 - Commit messages must be lowercase after `feat:` (commitlint enforced)
 - `npx playwright install --with-deps` requires sudo on Arch Linux; use `npx playwright install` without system deps flag
 - Playwright browsers have a host validation warning for missing system libs (libicu74, libxml2, libflite1)
+- WebKit projects fail entirely on Arch Linux; use chromium/firefox/pixel5 for reliable testing
+- e2e directory structure: e2e/{desktop,mobile,shared,fixtures,page-objects}
 
 ---
 
@@ -55,4 +57,17 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - yopki-dev/.mcp.json is the project-level MCP config (not trip-planner-web)
   - @playwright/mcp@latest is the package for Playwright MCP server
   - MCP config changes are committed to yopki-dev repo (main branch), not the ralph worktree
+---
+
+## 2026-01-27 - US-005
+- Created e2e directory structure with .gitkeep files for empty dirs (desktop, mobile, fixtures)
+- HomePage page object and navigation smoke test already existed from prior iteration
+- Added Playwright entries to .gitignore (test-results, playwright-report, blob-report, playwright/.cache)
+- Committed all e2e structure files
+- Files changed: e2e/desktop/.gitkeep, e2e/mobile/.gitkeep, e2e/fixtures/.gitkeep, e2e/page-objects/HomePage.ts, e2e/shared/navigation.spec.ts, .gitignore
+- Regression test added: RT-005
+- **Learnings for future iterations:**
+  - WebKit-based projects (desktop-webkit, mobile-iphone12) fail on Arch Linux due to missing system libs (libicu74, libxml2, libflite1)
+  - Use `--project=desktop-chromium` for quick single-project test runs
+  - Smoke tests use https://example.com to avoid needing local services running
 ---

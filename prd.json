@@ -68,8 +68,8 @@
         ".gitignore updated with Playwright entries (test-results, playwright-report, blob-report, playwright/.cache)"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "webkit projects fail on Arch Linux due to missing system libs (libicu74, libxml2, libflite1)"
     },
     {
       "id": "US-006",

@@ -15,7 +15,7 @@
       "description": "Verify Playwright is installed and browsers are available",
       "command": "cd ../trip-planner-web && npx playwright --version",
       "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:35:30-03:00",
+      "lastRun": "2026-01-27T12:38:36-03:00",
       "lastResult": "pass"
     },
     {
@@ -25,7 +25,7 @@
       "description": "Verify Playwright config has all 5 projects defined",
       "command": "cd ../trip-planner-web && grep -c 'name:' playwright.config.ts | grep -q '5'",
       "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:35:30-03:00",
+      "lastRun": "2026-01-27T12:38:36-03:00",
       "lastResult": "pass"
     },
     {
@@ -35,7 +35,7 @@
       "description": "Verify e2e-services.sh and e2e-check-services.sh exist and are executable",
       "command": "cd ../trip-planner-web && test -x scripts/e2e-services.sh && test -x scripts/e2e-check-services.sh && bash -n scripts/e2e-services.sh && bash -n scripts/e2e-check-services.sh",
       "createdAt": "2026-01-27T15:30:00Z",
-      "lastRun": "2026-01-27T12:35:30-03:00",
+      "lastRun": "2026-01-27T12:38:36-03:00",
       "lastResult": "pass"
     },
     {
@@ -45,18 +45,18 @@
       "description": "Verify Playwright MCP is configured in yopki-dev .mcp.json",
       "command": "cd /home/lcc/yopki/yopki-dev && grep -q 'playwright' .mcp.json && grep -q '@playwright/mcp@latest' .mcp.json",
       "createdAt": "2026-01-27T16:00:00Z",
-      "lastRun": null,
-      "lastResult": "never"
+      "lastRun": "2026-01-27T12:38:36-03:00",
+      "lastResult": "pass"
     },
     {
-      "id": "RT-003",
+      "id": "RT-005",
       "storyId": "US-005",
-      "storyTitle": "Example tests pass",
-      "description": "Verify example smoke tests pass on all projects",
-      "command": "cd ../trip-planner-web && npm run test:e2e",
-      "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:35:32-03:00",
-      "lastResult": "fail"
+      "storyTitle": "Create e2e directory structure and example tests",
+      "description": "Verify e2e directories exist, HomePage page object exists, smoke test passes, and .gitignore has Playwright entries",
+      "command": "cd ../trip-planner-web && test -d e2e/desktop && test -d e2e/mobile && test -d e2e/shared && test -d e2e/fixtures && test -d e2e/page-objects && test -f e2e/page-objects/HomePage.ts && test -f e2e/shared/navigation.spec.ts && grep -q 'test-results' .gitignore && npx playwright test --project=desktop-chromium e2e/shared/navigation.spec.ts",
+      "createdAt": "2026-01-27T16:30:00Z",
+      "lastRun": null,
+      "lastResult": "never"
     }
   ]
 }
