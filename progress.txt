@@ -1,0 +1,35 @@
+# Ralph Progress Log
+Started: Tue Jan 27 12:24:29 PM -03 2026
+---
+
+## Codebase Patterns
+- trip-planner-web is at /home/lcc/yopki/trip-planner-web (monorepo with turbo)
+- Commit messages must be lowercase after `feat:` (commitlint enforced)
+- `npx playwright install --with-deps` requires sudo on Arch Linux; use `npx playwright install` without system deps flag
+- Playwright browsers have a host validation warning for missing system libs (libicu74, libxml2, libflite1)
+
+---
+
+## 2026-01-27 - US-001
+- Installed @playwright/test and playwright as devDependencies
+- Created playwright.config.ts at repo root
+- Installed browser binaries via npx playwright install
+- Files changed: package.json, package-lock.json, playwright.config.ts
+- Regression test added: RT-001 (pre-existing)
+- **Learnings for future iterations:**
+  - trip-planner-web is at /home/lcc/yopki/trip-planner-web
+  - Commitlint enforces lowercase subject after type prefix
+  - Arch Linux needs manual sudo for playwright system deps
+---
+
+## 2026-01-27 - US-002
+- Configured 5 Playwright projects: desktop-chromium, desktop-firefox, desktop-webkit, mobile-pixel5, mobile-iphone12
+- Desktop projects target localhost:3005, mobile projects target localhost:3006
+- Added test:e2e, test:e2e:desktop, test:e2e:mobile scripts to package.json
+- Files changed: playwright.config.ts, package.json
+- Regression test added: RT-002 (pre-existing, updated command)
+- **Learnings for future iterations:**
+  - Commitlint rejects sentence-case subjects; use all lowercase after `feat:`
+  - `npx playwright test --list` returns exit 1 when no test files exist
+  - Desktop projects use testMatch: ['desktop/**', 'shared/**'], mobile uses ['mobile/**', 'shared/**']
+---

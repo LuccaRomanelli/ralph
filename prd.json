@@ -1,0 +1,118 @@
+{
+  "project": "trip-planner-web",
+  "branchName": "ralph/e2e-playwright",
+  "description": "E2E Testing with Playwright + TDD Workflow for Claude Code",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Install Playwright in trip-planner-web",
+      "description": "As a developer, I need Playwright installed so I can run e2e tests.",
+      "acceptanceCriteria": [
+        "Playwright and @playwright/test are in devDependencies",
+        "Browsers are installed via npx playwright install --with-deps",
+        "playwright.config.ts exists at repo root"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Configure Playwright projects for desktop and mobile",
+      "description": "As a developer, I need separate Playwright projects for web-desktop (port 3005) with desktop browsers and web-mobile (port 3006) with mobile viewports.",
+      "acceptanceCriteria": [
+        "Desktop projects: chromium, firefox, webkit targeting localhost:3005",
+        "Mobile projects: Pixel 5 and iPhone 12 targeting localhost:3006",
+        "npm run test:e2e runs all projects",
+        "npm run test:e2e:desktop and test:e2e:mobile run subsets"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create service orchestration script",
+      "description": "As a developer, I need a script to start NATS (Docker), BFF (nhost up), backend (pnpm dev), and both web apps before running e2e tests.",
+      "acceptanceCriteria": [
+        "scripts/e2e-services.sh starts all services in correct order: NATS Docker -> nhost up -> pnpm dev -> npm run dev (both apps)",
+        "Waits for all ports to be ready before running tests",
+        "Tears down services on exit via trap SIGINT/SIGTERM",
+        "scripts/e2e-check-services.sh validates running services"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "NATS must start via Docker before nhost up"
+    },
+    {
+      "id": "US-004",
+      "title": "Set up Playwright MCP for Claude Code",
+      "description": "As a developer using Claude Code, I need Playwright MCP configured so Claude can interactively test in the browser.",
+      "acceptanceCriteria": [
+        "claude mcp add playwright configured for the project",
+        "Playwright MCP tools available in Claude Code sessions",
+        "Can navigate to localhost:3005 and localhost:3006 via MCP"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Run: claude mcp add playwright -- npx @playwright/mcp@latest"
+    },
+    {
+      "id": "US-005",
+      "title": "Create e2e directory structure and example tests",
+      "description": "As a developer, I need the e2e folder structure with Page Object Model pattern and example tests.",
+      "acceptanceCriteria": [
+        "e2e/desktop/, e2e/mobile/, e2e/shared/, e2e/fixtures/, e2e/page-objects/ directories exist",
+        "HomePage page object created as reference pattern",
+        "Example smoke test in e2e/shared/navigation.spec.ts passes",
+        ".gitignore updated with Playwright entries (test-results, playwright-report, blob-report, playwright/.cache)"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Update CLAUDE.md with mandatory e2e testing rules",
+      "description": "As a developer, I need CLAUDE.md updated so Claude Code always writes e2e tests following strict TDD.",
+      "acceptanceCriteria": [
+        "CLAUDE.md has E2E Testing (Mandatory) section with strict TDD requirements",
+        "Test location rules documented: desktop/ for web-desktop, mobile/ for web-mobile, shared/ for both",
+        "Running test commands documented: test:e2e, test:e2e:desktop, test:e2e:mobile",
+        "Page Object Model pattern referenced with path to e2e/page-objects/"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "File: /home/lcc/yopki/yopki-dev/CLAUDE.md"
+    },
+    {
+      "id": "US-007",
+      "title": "Update dev.md command with TDD workflow phases",
+      "description": "As a developer, I need the /dev command to enforce writing e2e tests before implementation.",
+      "acceptanceCriteria": [
+        "Plan phase includes E2E Test Plan as a required section listing tests to write",
+        "New phase added: Write E2E Tests (before implementation begins)",
+        "New phase added: Verify (run e2e tests after implementation)",
+        "Dev workflow follows strict TDD: write failing tests -> implement -> verify tests pass"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "File: /home/lcc/yopki/yopki-dev/.claude/commands/dev.md"
+    },
+    {
+      "id": "US-008",
+      "title": "Create e2e-testing.md reference doc",
+      "description": "As a developer, I need a comprehensive reference doc for writing Playwright tests in this project.",
+      "acceptanceCriteria": [
+        ".claude/docs/e2e-testing.md created in yopki-dev",
+        "Covers: Playwright test syntax, assertions, selectors",
+        "Covers: Page Object Model conventions for this project",
+        "Covers: Playwright MCP usage for interactive testing",
+        "Covers: auth fixtures (Nhost/Clerk), mobile vs desktop considerations, debugging"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": "File: /home/lcc/yopki/yopki-dev/.claude/docs/e2e-testing.md"
+    }
+  ]
+}

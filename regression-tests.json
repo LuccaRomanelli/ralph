@@ -1,0 +1,42 @@
+{
+  "project": "trip-planner-web",
+  "branchName": "ralph/e2e-playwright",
+  "config": {
+    "runStrategy": "all",
+    "maxTests": 0,
+    "failureAction": "fix",
+    "maxFixAttempts": 3
+  },
+  "tests": [
+    {
+      "id": "RT-001",
+      "storyId": "US-001",
+      "storyTitle": "Install Playwright in trip-planner-web",
+      "description": "Verify Playwright is installed and browsers are available",
+      "command": "cd ../trip-planner-web && npx playwright --version",
+      "createdAt": "2026-01-27T00:00:00Z",
+      "lastRun": "2026-01-27T12:26:19-03:00",
+      "lastResult": "fail"
+    },
+    {
+      "id": "RT-002",
+      "storyId": "US-002",
+      "storyTitle": "Configure Playwright projects",
+      "description": "Verify Playwright config has all 5 projects defined",
+      "command": "cd ../trip-planner-web && grep -c 'name:' playwright.config.ts | grep -q '5'",
+      "createdAt": "2026-01-27T00:00:00Z",
+      "lastRun": null,
+      "lastResult": "never"
+    },
+    {
+      "id": "RT-003",
+      "storyId": "US-005",
+      "storyTitle": "Example tests pass",
+      "description": "Verify example smoke tests pass on all projects",
+      "command": "cd ../trip-planner-web && npm run test:e2e",
+      "createdAt": "2026-01-27T00:00:00Z",
+      "lastRun": null,
+      "lastResult": "never"
+    }
+  ]
+}
