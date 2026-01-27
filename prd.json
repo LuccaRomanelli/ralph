@@ -82,7 +82,7 @@
         "Page Object Model pattern referenced with path to e2e/page-objects/"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "notes": "File: /home/lcc/yopki/yopki-dev/CLAUDE.md"
     },
     {

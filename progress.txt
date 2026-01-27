@@ -71,3 +71,14 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - Use `--project=desktop-chromium` for quick single-project test runs
   - Smoke tests use https://example.com to avoid needing local services running
 ---
+
+## 2026-01-27 - US-006
+- Added "E2E Testing (Mandatory)" section to yopki-dev/CLAUDE.md
+- Includes strict TDD requirements, test location rules (desktop/mobile/shared), running commands, and Page Object Model reference
+- Added e2e-testing.md to Reference Docs list
+- Files changed: /home/lcc/yopki/yopki-dev/CLAUDE.md
+- Regression test added: RT-006
+- **Learnings for future iterations:**
+  - yopki-dev/CLAUDE.md is the central project instructions file
+  - Changes to yopki-dev are committed on main branch (separate from ralph worktree)
+---
