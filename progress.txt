@@ -45,3 +45,14 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - Commitlint rejects uppercase in subject; use `us-003` not `US-003`
   - nc -z is used for port checking; available on most Linux systems
 ---
+
+## 2026-01-27 - US-004
+- Added Playwright MCP server configuration to yopki-dev/.mcp.json
+- Command: `npx @playwright/mcp@latest`
+- Files changed: /home/lcc/yopki/yopki-dev/.mcp.json
+- Regression test added: RT-004
+- **Learnings for future iterations:**
+  - yopki-dev/.mcp.json is the project-level MCP config (not trip-planner-web)
+  - @playwright/mcp@latest is the package for Playwright MCP server
+  - MCP config changes are committed to yopki-dev repo (main branch), not the ralph worktree
+---

@@ -54,7 +54,7 @@
         "Can navigate to localhost:3005 and localhost:3006 via MCP"
       ],
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "notes": "Run: claude mcp add playwright -- npx @playwright/mcp@latest"
     },
     {
