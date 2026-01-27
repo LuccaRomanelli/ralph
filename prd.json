@@ -111,7 +111,7 @@
         "Covers: auth fixtures (Nhost/Clerk), mobile vs desktop considerations, debugging"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "File: /home/lcc/yopki/yopki-dev/.claude/docs/e2e-testing.md"
     }
   ]

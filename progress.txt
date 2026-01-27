@@ -97,3 +97,18 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - The file was newly created (didn't exist before this commit)
   - Changes to yopki-dev are committed on main branch
 ---
+
+## 2026-01-27 - US-008
+- Created .claude/docs/e2e-testing.md comprehensive reference doc
+- Covers: Playwright test syntax, assertions, selectors, user actions
+- Covers: Page Object Model conventions with examples matching project's HomePage pattern
+- Covers: Auth fixtures (Nhost-based) with storageState approach
+- Covers: Mobile vs desktop considerations (viewports, touch, base URLs)
+- Covers: Playwright MCP usage for interactive testing
+- Covers: Debugging (headed, inspector, trace, codegen)
+- Files changed: /home/lcc/yopki/yopki-dev/.claude/docs/e2e-testing.md
+- Regression test added: RT-008
+- **Learnings for future iterations:**
+  - .claude/docs/ is the location for reference documentation in yopki-dev
+  - Existing docs: bff-pattern.md, commands-reference.md, tech-stack.md
+---
