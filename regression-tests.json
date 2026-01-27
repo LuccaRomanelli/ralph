@@ -15,8 +15,8 @@
       "description": "Verify Playwright is installed and browsers are available",
       "command": "cd ../trip-planner-web && npx playwright --version",
       "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:26:19-03:00",
-      "lastResult": "fail"
+      "lastRun": "2026-01-27T12:31:09-03:00",
+      "lastResult": "pass"
     },
     {
       "id": "RT-002",
