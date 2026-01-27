@@ -15,7 +15,7 @@
       "description": "Verify Playwright is installed and browsers are available",
       "command": "cd ../trip-planner-web && npx playwright --version",
       "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:41:28-03:00",
+      "lastRun": "2026-01-27T12:42:41-03:00",
       "lastResult": "pass"
     },
     {
@@ -25,7 +25,7 @@
       "description": "Verify Playwright config has all 5 projects defined",
       "command": "cd ../trip-planner-web && grep -c 'name:' playwright.config.ts | grep -q '5'",
       "createdAt": "2026-01-27T00:00:00Z",
-      "lastRun": "2026-01-27T12:41:28-03:00",
+      "lastRun": "2026-01-27T12:42:41-03:00",
       "lastResult": "pass"
     },
     {
@@ -35,7 +35,7 @@
       "description": "Verify e2e-services.sh and e2e-check-services.sh exist and are executable",
       "command": "cd ../trip-planner-web && test -x scripts/e2e-services.sh && test -x scripts/e2e-check-services.sh && bash -n scripts/e2e-services.sh && bash -n scripts/e2e-check-services.sh",
       "createdAt": "2026-01-27T15:30:00Z",
-      "lastRun": "2026-01-27T12:41:28-03:00",
+      "lastRun": "2026-01-27T12:42:41-03:00",
       "lastResult": "pass"
     },
     {
@@ -45,7 +45,7 @@
       "description": "Verify Playwright MCP is configured in yopki-dev .mcp.json",
       "command": "cd /home/lcc/yopki/yopki-dev && grep -q 'playwright' .mcp.json && grep -q '@playwright/mcp@latest' .mcp.json",
       "createdAt": "2026-01-27T16:00:00Z",
-      "lastRun": "2026-01-27T12:41:28-03:00",
+      "lastRun": "2026-01-27T12:42:41-03:00",
       "lastResult": "pass"
     },
     {
@@ -55,7 +55,7 @@
       "description": "Verify e2e directories exist, HomePage page object exists, smoke test passes, and .gitignore has Playwright entries",
       "command": "cd ../trip-planner-web && test -d e2e/desktop && test -d e2e/mobile && test -d e2e/shared && test -d e2e/fixtures && test -d e2e/page-objects && test -f e2e/page-objects/HomePage.ts && test -f e2e/shared/navigation.spec.ts && grep -q 'test-results' .gitignore && npx playwright test --project=desktop-chromium e2e/shared/navigation.spec.ts",
       "createdAt": "2026-01-27T16:30:00Z",
-      "lastRun": "2026-01-27T12:41:30-03:00",
+      "lastRun": "2026-01-27T12:42:44-03:00",
       "lastResult": "pass"
     },
     {
@@ -65,6 +65,16 @@
       "description": "Verify CLAUDE.md has E2E Testing section with TDD rules, test locations, commands, and page object reference",
       "command": "cd /home/lcc/yopki/yopki-dev && grep -q 'E2E Testing (Mandatory)' CLAUDE.md && grep -q 'strict TDD' CLAUDE.md && grep -q 'e2e/desktop/' CLAUDE.md && grep -q 'test:e2e' CLAUDE.md && grep -q 'page-objects/' CLAUDE.md",
       "createdAt": "2026-01-27T17:00:00Z",
+      "lastRun": "2026-01-27T12:42:44-03:00",
+      "lastResult": "pass"
+    },
+    {
+      "id": "RT-007",
+      "storyId": "US-007",
+      "storyTitle": "Update dev.md command with TDD workflow phases",
+      "description": "Verify dev.md has E2E Test Plan section, Write E2E Tests phase, Verify phase, and strict TDD rules",
+      "command": "cd /home/lcc/yopki/yopki-dev && grep -q 'E2E Test Plan' .claude/commands/dev.md && grep -q 'Write E2E Tests' .claude/commands/dev.md && grep -q 'Verify (TDD' .claude/commands/dev.md && grep -q 'Strict TDD' .claude/commands/dev.md",
+      "createdAt": "2026-01-27T17:30:00Z",
       "lastRun": null,
       "lastResult": "never"
     }

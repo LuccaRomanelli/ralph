@@ -82,3 +82,18 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - yopki-dev/CLAUDE.md is the central project instructions file
   - Changes to yopki-dev are committed on main branch (separate from ralph worktree)
 ---
+
+## 2026-01-27 - US-007
+- Updated dev.md with TDD workflow phases
+- Added E2E Test Plan as section 5 in the plan (Phase 3)
+- Added Phase 5: Write E2E Tests (TDD Red Phase) - write failing tests before implementation
+- Added Phase 6: Implementation
+- Added Phase 7: Verify (TDD Green Phase) - run tests after implementation
+- Added strict TDD rules to Important Rules section
+- Files changed: /home/lcc/yopki/yopki-dev/.claude/commands/dev.md
+- Regression test added: RT-007
+- **Learnings for future iterations:**
+  - dev.md is a Claude Code custom command at .claude/commands/dev.md
+  - The file was newly created (didn't exist before this commit)
+  - Changes to yopki-dev are committed on main branch
+---

@@ -96,7 +96,7 @@
         "Dev workflow follows strict TDD: write failing tests -> implement -> verify tests pass"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "notes": "File: /home/lcc/yopki/yopki-dev/.claude/commands/dev.md"
     },
     {
