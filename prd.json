@@ -41,7 +41,7 @@
         "scripts/e2e-check-services.sh validates running services"
       ],
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "notes": "NATS must start via Docker before nhost up"
     },
     {

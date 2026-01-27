@@ -33,3 +33,15 @@ Started: Tue Jan 27 12:24:29 PM -03 2026
   - `npx playwright test --list` returns exit 1 when no test files exist
   - Desktop projects use testMatch: ['desktop/**', 'shared/**'], mobile uses ['mobile/**', 'shared/**']
 ---
+
+## 2026-01-27 - US-003
+- Created scripts/e2e-services.sh: starts NATS (Docker), nhost, and turbo dev; waits for ports 3005/3006; tears down on exit
+- Created scripts/e2e-check-services.sh: validates web-desktop (3005), web-mobile (3006), and NATS container
+- Files changed: scripts/e2e-services.sh, scripts/e2e-check-services.sh
+- Regression test added: RT-003a
+- **Learnings for future iterations:**
+  - Project uses remote Nhost endpoints (not local Docker); nhost CLI is optional
+  - turbo dev starts both web-desktop (3005) and web-mobile (3006) via npm run dev
+  - Commitlint rejects uppercase in subject; use `us-003` not `US-003`
+  - nc -z is used for port checking; available on most Linux systems
+---
