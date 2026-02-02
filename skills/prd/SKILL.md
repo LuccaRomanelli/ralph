@@ -12,16 +12,63 @@ Create detailed Product Requirements Documents that are clear, actionable, and s
 
 ## The Job
 
-1. Receive a feature description from the user
-2. Ask 3-5 essential clarifying questions (with lettered options)
-3. Generate a structured PRD based on answers
-4. Save to `tasks/prd-[feature-name].md`
+1. Analyze the existing codebase (NEW)
+2. Receive a feature description from the user
+3. Ask 3-5 essential clarifying questions informed by analysis (with lettered options)
+4. Generate a structured PRD with Codebase Analysis section
+5. Save to `tasks/prd-[feature-name].md`
 
 **Important:** Do NOT start implementing. Just create the PRD.
 
 ---
 
-## Step 1: Clarifying Questions
+## Step 0: Codebase Analysis (BEFORE asking questions)
+
+Before asking clarifying questions, analyze the existing codebase to inform your PRD:
+
+### 1. Map Project Structure
+- Identify main directories and their purposes
+- Note the tech stack (framework, styling, database)
+- Find where similar features live
+
+### 2. Find Reusable Components
+Search for existing code that could be reused:
+- UI components (buttons, modals, forms)
+- Hooks and utilities
+- API patterns and validation schemas
+
+### 3. Identify Patterns
+Document conventions:
+- Naming conventions
+- State management
+- Styling approach
+- Error handling
+
+### 4. Check for Similar Features
+- Could this extend an existing feature?
+- Is there code that does something similar?
+
+**Use these findings** to ask better questions and write a more informed PRD.
+
+---
+
+## Step 1: Clarifying Questions (Informed by Analysis)
+
+Start by sharing what you found in the codebase, then ask questions:
+
+```
+I analyzed your codebase and found:
+- You have Badge, Button, Dialog components in components/ui/
+- Tasks are in src/app/tasks/ with server actions
+- You use Tailwind + cn() for styling
+
+With this context:
+
+1. For the priority indicator, should we:
+   A. Extend existing Badge with priority variants
+   B. Create new PriorityBadge component
+   ...
+```
 
 Ask only critical questions where the initial prompt is ambiguous. Focus on:
 
@@ -59,6 +106,45 @@ This lets users respond with "1A, 2C, 3B" for quick iteration.
 ## Step 2: PRD Structure
 
 Generate the PRD with these sections:
+
+### 0. Codebase Analysis (First Section)
+
+Include analysis results at the TOP of the PRD:
+
+```markdown
+## Codebase Analysis
+
+### Project Structure
+| Directory | Purpose |
+|-----------|---------|
+| src/app/ | Next.js app router pages |
+| src/components/ | Reusable UI components |
+| src/lib/ | Utilities and helpers |
+| src/db/ | Database schema and queries |
+
+### Tech Stack
+- Framework: Next.js 14 (app router)
+- Styling: Tailwind CSS + cn() utility
+- Database: Drizzle ORM + SQLite
+- UI: Shadcn/ui components
+
+### Reusable Components
+| Component | Location | Reuse For |
+|-----------|----------|-----------|
+| Badge | components/ui/badge | Priority indicator |
+| Dialog | components/ui/dialog | Edit modal |
+| useOptimistic | hooks/ | Instant updates |
+
+### Relevant Existing Code
+- `src/app/tasks/actions.ts` - Task mutations (extend for priority)
+- `src/components/TaskCard.tsx` - Add priority display here
+- `src/db/schema.ts` - Add priority field
+
+### Patterns to Follow
+- Server actions for mutations
+- Zod schemas for validation
+- cn() for conditional Tailwind classes
+```
 
 ### 1. Introduction/Overview
 Brief description of the feature and the problem it solves.
@@ -105,7 +191,22 @@ What this feature will NOT include. Critical for managing scope.
 - Link to mockups if available
 - Relevant existing components to reuse
 
-### 7. Technical Considerations (Optional)
+### 7. Technical Considerations (Required)
+
+Reference the Codebase Analysis section:
+
+```markdown
+## Technical Considerations
+
+**From Codebase Analysis:**
+
+- **Reuse:** Badge component for priority indicator, useOptimistic for instant UI
+- **Extend:** TaskCard.tsx, actions.ts, schema.ts
+- **Pattern:** Follow existing Dialog usage for edit modal
+- **New:** Only priority-badge.tsx if Badge doesn't fit
+```
+
+Additional considerations:
 - Known constraints or dependencies
 - Integration points with existing systems
 - Performance requirements
@@ -144,6 +245,35 @@ The PRD reader may be a junior developer or AI agent. Therefore:
 
 ```markdown
 # PRD: Task Priority System
+
+## Codebase Analysis
+
+### Project Structure
+| Directory | Purpose |
+|-----------|---------|
+| src/app/ | Next.js pages |
+| src/components/ | UI components |
+| src/lib/ | Utilities |
+| src/db/ | Database |
+
+### Tech Stack
+- Next.js 14, Tailwind, Drizzle, Shadcn/ui
+
+### Reusable Components
+| Component | Location | Reuse For |
+|-----------|----------|-----------|
+| Badge | components/ui/badge | Priority indicator |
+| Dialog | components/ui/dialog | Edit modal |
+
+### Relevant Existing Code
+- src/app/tasks/actions.ts - extend for priority
+- src/components/TaskCard.tsx - add priority prop
+
+### Patterns to Follow
+- Server actions for data mutations
+- cn() for conditional classes
+
+---
 
 ## Introduction
 
@@ -211,7 +341,13 @@ Add priority levels to tasks so users can focus on what matters most. Tasks can 
 
 ## Technical Considerations
 
-- Reuse existing badge component with color variants
+**From Codebase Analysis:**
+
+- **Reuse:** Badge component for priority colors
+- **Extend:** schema.ts, actions.ts, TaskCard.tsx
+- **Pattern:** Follow existing migration format
+
+Additional:
 - Filter state managed via URL search params
 - Priority stored in database, not computed
 
@@ -233,9 +369,13 @@ Add priority levels to tasks so users can focus on what matters most. Tasks can 
 
 Before saving the PRD:
 
+- [ ] Analyzed the codebase first
+- [ ] Shared codebase findings with user before questions
 - [ ] Asked clarifying questions with lettered options
 - [ ] Incorporated user's answers
+- [ ] PRD includes Codebase Analysis section at the top
 - [ ] User stories are small and specific
 - [ ] Functional requirements are numbered and unambiguous
 - [ ] Non-goals section defines clear boundaries
+- [ ] Technical Considerations references Codebase Analysis
 - [ ] Saved to `tasks/prd-[feature-name].md`

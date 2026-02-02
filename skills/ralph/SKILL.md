@@ -245,6 +245,19 @@ Add ability to mark tasks with different statuses.
 
 ---
 
+## Note: Codebase Analysis
+
+The PRD should include a "Codebase Analysis" section at the top with:
+- Project structure
+- Tech stack
+- Reusable components
+- Relevant existing code
+- Patterns to follow
+
+If this section is missing, the PRD may not leverage existing code effectively. Consider asking the user to regenerate the PRD using the `/prd` skill, which now includes codebase analysis.
+
+---
+
 ## Checklist Before Saving
 
 Before writing prd.json, verify:

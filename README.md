@@ -95,6 +95,12 @@ Use the PRD skill to generate a detailed requirements document:
 Load the prd skill and create a PRD for [your feature description]
 ```
 
+The skill will:
+1. **Analyze your codebase** - Identify structure, tech stack, reusable components, and patterns
+2. **Share findings** - Show you what it found before asking questions
+3. **Ask informed questions** - Questions based on what exists in your code
+4. **Generate PRD with Codebase Analysis** - The PRD includes a section documenting reusable code
+
 Answer the clarifying questions. The skill saves output to `tasks/prd-[feature-name].md`.
 
 ### 2. Convert PRD to Ralph format
