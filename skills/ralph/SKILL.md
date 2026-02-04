@@ -28,6 +28,8 @@ Take a PRD (markdown file or text) and convert it to `prd.json` in your ralph di
       "id": "US-001",
       "title": "[Story title]",
       "description": "As a [user], I want [feature] so that [benefit]",
+      "testType": "unit | integration | e2e | none",
+      "testRepo": "trip-planner-web | trip-planner-backend | trip-planner-bff",
       "acceptanceCriteria": [
         "Criterion 1",
         "Criterion 2",
@@ -124,6 +126,31 @@ Frontend stories are NOT complete until visually verified. Ralph will use the de
 4. **All stories**: `passes: false` and empty `notes`
 5. **branchName**: Derive from feature name, kebab-case, prefixed with `ralph/`
 6. **Always add**: "Typecheck passes" to every story's acceptance criteria
+7. **testType**: Specify the appropriate test type for each story:
+   - `unit` - pure logic, utils, mappers, validators
+   - `integration` - controller+service+DB, API handlers
+   - `e2e` - user-facing flows through the UI
+   - `none` - no automated test (e.g., BFF config changes)
+8. **testRepo**: Specify where tests should live:
+   - `trip-planner-web` - frontend tests
+   - `trip-planner-backend` - backend tests
+   - `trip-planner-bff` - BFF tests
+
+---
+
+## TDD Workflow (when testType != "none")
+
+When processing a user story with `testType` != `"none"`:
+
+1. **Read test documentation** for the testRepo (see CLAUDE.md for commands)
+2. **Write a failing test first** that validates the acceptance criteria
+3. **Implement the feature** to make the test pass
+4. **Run tests** to verify: see CLAUDE.md for commands per repo
+
+For reference:
+- **E2E patterns**: `.claude/docs/e2e-testing.md`
+- **Test commands**: `CLAUDE.md` (Testing section)
+- **Backend test examples**: `trip-planner-backend/**/*.spec.ts`
 
 ---
 

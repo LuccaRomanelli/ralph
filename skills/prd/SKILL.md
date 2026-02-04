@@ -14,7 +14,7 @@ Create detailed Product Requirements Documents that are clear, actionable, and s
 
 1. Analyze the existing codebase (NEW)
 2. Receive a feature description from the user
-3. Ask 3-5 essential clarifying questions informed by analysis (with lettered options)
+3. Ask clarifying questions using AskUserQuestion tool in batches
 4. Generate a structured PRD with Codebase Analysis section
 5. Save to `tasks/prd-[feature-name].md`
 
@@ -62,13 +62,10 @@ I analyzed your codebase and found:
 - Tasks are in src/app/tasks/ with server actions
 - You use Tailwind + cn() for styling
 
-With this context:
-
-1. For the priority indicator, should we:
-   A. Extend existing Badge with priority variants
-   B. Create new PriorityBadge component
-   ...
+With this context, I'll ask a few clarifying questions...
 ```
+
+Then use AskUserQuestion tool with questions informed by your analysis.
 
 Ask only critical questions where the initial prompt is ambiguous. Focus on:
 
@@ -77,29 +74,78 @@ Ask only critical questions where the initial prompt is ambiguous. Focus on:
 - **Scope/Boundaries:** What should it NOT do?
 - **Success Criteria:** How do we know it's done?
 
-### Format Questions Like This:
+### Use AskUserQuestion Tool
 
+Use the AskUserQuestion tool to ask clarifying questions in batches of 2-4 questions. Continue asking until all critical areas are covered.
+
+**Batch 1: Problem & Goal**
+```json
+{
+  "questions": [
+    {
+      "question": "What is the primary goal of this feature?",
+      "header": "Goal",
+      "options": [
+        {"label": "Improve onboarding", "description": "Enhance new user experience"},
+        {"label": "Increase retention", "description": "Keep existing users engaged"},
+        {"label": "Reduce support", "description": "Decrease support ticket volume"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "question": "Who is the target user for this feature?",
+      "header": "Target User",
+      "options": [
+        {"label": "New users only", "description": "First-time users of the product"},
+        {"label": "Existing users", "description": "Users already familiar with the product"},
+        {"label": "All users", "description": "Both new and existing users"},
+        {"label": "Admin users", "description": "Users with admin privileges"}
+      ],
+      "multiSelect": false
+    }
+  ]
+}
 ```
-1. What is the primary goal of this feature?
-   A. Improve user onboarding experience
-   B. Increase user retention
-   C. Reduce support burden
-   D. Other: [please specify]
 
-2. Who is the target user?
-   A. New users only
-   B. Existing users only
-   C. All users
-   D. Admin users only
-
-3. What is the scope?
-   A. Minimal viable version
-   B. Full-featured implementation
-   C. Just the backend/API
-   D. Just the UI
+**Batch 2: Scope & Success** (after receiving Batch 1 answers)
+```json
+{
+  "questions": [
+    {
+      "question": "What is the scope for this feature?",
+      "header": "Scope",
+      "options": [
+        {"label": "MVP only", "description": "Minimal viable version"},
+        {"label": "Full feature", "description": "Complete implementation"},
+        {"label": "Backend only", "description": "Just the API/backend"},
+        {"label": "UI only", "description": "Just the frontend/UI"}
+      ],
+      "multiSelect": false
+    },
+    {
+      "question": "How will success be measured?",
+      "header": "Success",
+      "options": [
+        {"label": "User metrics", "description": "Engagement, retention, satisfaction"},
+        {"label": "Business metrics", "description": "Revenue, conversion, support reduction"},
+        {"label": "Technical metrics", "description": "Performance, reliability, coverage"}
+      ],
+      "multiSelect": true
+    }
+  ]
+}
 ```
 
-This lets users respond with "1A, 2C, 3B" for quick iteration.
+**Guidelines:**
+- Ask 2-4 questions per batch
+- Wait for user answers before asking the next batch
+- Continue until these areas are clarified:
+  - Problem/Goal
+  - Target Users
+  - Core Functionality
+  - Scope/Boundaries
+  - Success Criteria
+- If user selects "Other" or provides custom input, follow up with clarifying questions
 
 ---
 
@@ -157,6 +203,9 @@ Each story needs:
 - **Title:** Short descriptive name
 - **Description:** "As a [user], I want [feature] so that [benefit]"
 - **Acceptance Criteria:** Verifiable checklist of what "done" means
+
+For each user story, specify `testType` (unit|integration|e2e|none) and `testRepo`.
+See CLAUDE.md for test commands and .claude/docs/e2e-testing.md for patterns.
 
 Each story should be small enough to implement in one focused session.
 
@@ -371,7 +420,7 @@ Before saving the PRD:
 
 - [ ] Analyzed the codebase first
 - [ ] Shared codebase findings with user before questions
-- [ ] Asked clarifying questions with lettered options
+- [ ] Asked clarifying questions using AskUserQuestion tool in batches
 - [ ] Incorporated user's answers
 - [ ] PRD includes Codebase Analysis section at the top
 - [ ] User stories are small and specific
