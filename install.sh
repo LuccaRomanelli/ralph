@@ -40,8 +40,9 @@ echo "✓ ralph.sh modificado para usar RALPH.md"
 cp "$SCRIPT_DIR/prd.json.example" "$TARGET_DIR/"
 echo "✓ prd.json.example copiado"
 
-# 5. Criar diretorio de skills e copiar
+# 5. Criar diretorio de skills e copiar (remove existentes primeiro)
 mkdir -p "$TARGET_DIR/.claude/skills"
+rm -rf "$TARGET_DIR/.claude/skills/prd" "$TARGET_DIR/.claude/skills/ralph"
 cp -r "$SCRIPT_DIR/skills/"* "$TARGET_DIR/.claude/skills/"
 echo "✓ Skills copiadas para .claude/skills/"
 
